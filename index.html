@@ -45,3 +45,53 @@
         const forceX = (dx / distance) * attractorStrength;
         const forceY = (dy / distance) * attractorStrength;
         
+        this.vx += forceX;
+        this.vy += forceY;
+        
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function createParticles() {
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    canvas.addEventListener("mousemove", function(event) {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+    });
+
+    createParticles();
+    animateParticles();
+  </script>
+</body>
+</html>
