@@ -42,3 +42,4 @@
         const dy = mouseY - this.y;
         const distanceSquared = dx * dx + dy * dy;
         const distance = Math.sqrt(distanceSquared);
+        const forceX = (dx / distance) * attractorStrength;
